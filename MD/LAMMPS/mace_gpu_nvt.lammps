@@ -1,0 +1,38 @@
+# Initialization
+units         metal
+atom_style    atomic
+atom_modify   map yes
+newton        on 
+boundary      p p p
+
+read_data ./NAME.data
+
+# Simulation settings
+mass 1 1.008000 
+mass 2 14.007000
+mass 3 15.999000 
+mass 4 26.9815385
+mass 5 28.085000 
+mass 6 106.42000
+
+pair_style mace no_domain_decomposition
+pair_coeff * * Pd_NH3_stagetwo_compiled.model-lammps.pt H N O Al Si Pd # Order matches FLARE-OTF order
+
+# Minimize
+minimize 1.0e-6 1.0e-6 1000 10000
+
+reset_timestep 0
+
+thermo 100
+thermo_style custom step time temp press pe
+thermo_modify format float %20.10g
+
+dump myltr all custom 100 dump.lammpstrj id type x y z ix iy iz vx vy vz fx fy fz
+dump_modify myltr sort id format line "%d %d %.5f %.5f %.5f %d %d %d %.5f %.5f %.5f %.5f %.5f %.5f" 
+
+# Run
+fix nvt all nvt temp 650 650 0.05
+
+timestep 0.0005
+restart 250000 tmp.restart
+run 2000000
