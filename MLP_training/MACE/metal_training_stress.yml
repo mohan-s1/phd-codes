@@ -1,0 +1,39 @@
+name: cummins_combined
+
+train_file: train.xyz
+valid_fraction: 0.05
+test_file: test.xyz
+
+energy_key: "energy"
+forces_key: "forces"
+stress_key: "stress"
+E0s: "average"
+
+loss: "stress"
+
+energy_weight: 1.0
+forces_weight: 1000.0
+stress_weight: 10.0
+
+model: "MACE"
+hidden_irreps: "128x0e"
+r_max: 4.5
+num_interactions: 2
+
+batch_size: 10
+max_num_epochs: 400
+
+stage_two: true
+start_stage_two: 350
+
+stage_two_energy_weight: 1000.0
+stage_two_forces_weight: 100.0
+stage_two_stress_weight: 10.0
+
+ema: true
+ema_decay: 0.99
+amsgrad: true
+
+restart_latest: true
+device: "cuda"
+default_dtype: float32

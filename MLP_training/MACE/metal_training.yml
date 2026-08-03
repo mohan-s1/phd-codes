@@ -1,0 +1,28 @@
+name: Co_NH3
+
+train_file: train.xyz
+valid_fraction: 0.05
+test_file: test.xyz
+
+energy_key: "energy"
+forces_key: "forces"
+E0s: "average"
+
+model: "MACE"
+hidden_irreps: "128x0e"
+r_max: 4.5
+num_interactions: 2
+
+batch_size: 10
+max_num_epochs: 400
+
+stage_two: true
+start_stage_two: 350
+
+ema: true
+ema_decay: 0.99
+amsgrad: true
+
+restart_latest: true
+device: "cuda"
+default_dtype: float32
